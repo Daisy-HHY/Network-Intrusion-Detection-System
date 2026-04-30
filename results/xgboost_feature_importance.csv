@@ -1,0 +1,16 @@
+feature,importance
+num__sttl,0.66028947
+cat__proto_tcp,0.028357651
+num__ct_srv_dst,0.021887591
+cat__proto_arp,0.01770222
+num__ct_dst_sport_ltm,0.017371152
+num__dttl,0.015829321
+num__is_sm_ips_ports,0.015629558
+num__ct_state_ttl,0.015318904
+cat__state_CON,0.014238792
+cat__proto_unas,0.012727618
+num__sbytes,0.012334413
+num__swin,0.011308285
+num__smean,0.009312518
+num__sloss,0.008677051
+cat__service_dns,0.008422805
