@@ -1,0 +1,13 @@
+__pycache__/
+.pytest_cache/
+.venv/
+venv/
+*.pyc
+data/raw/*.csv
+data/raw/*.txt
+data/processed/*
+!data/processed/.gitkeep
+models/*
+!models/.gitkeep
+results/figures/*
+!results/figures/.gitkeep
