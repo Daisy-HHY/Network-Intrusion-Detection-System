@@ -35,3 +35,21 @@ def test_build_preprocessor_transforms_dataframe():
     matrix = transformer.fit_transform(features)
 
     assert matrix.shape[0] == 2
+
+
+def test_build_preprocessor_can_force_dense_output():
+    features = pd.DataFrame(
+        {
+            "dur": [0.1, 0.2],
+            "sbytes": [10, 20],
+            "proto": ["tcp", "udp"],
+            "service": ["http", "dns"],
+            "state": ["FIN", "INT"],
+        }
+    )
+
+    transformer = build_preprocessor(features, dense_output=True)
+    matrix = transformer.fit_transform(features)
+
+    assert hasattr(matrix, "shape")
+    assert not hasattr(matrix, "toarray")

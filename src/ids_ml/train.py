@@ -3,6 +3,7 @@ from pathlib import Path
 import joblib
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
+from sklearn.neural_network import MLPClassifier
 from sklearn.pipeline import Pipeline
 from sklearn.tree import DecisionTreeClassifier
 from xgboost import XGBClassifier
@@ -32,6 +33,18 @@ def get_binary_models():
     }
 
 
+def get_mlp_binary_model():
+    return MLPClassifier(
+        hidden_layer_sizes=(128, 64),
+        activation="relu",
+        learning_rate_init=0.001,
+        max_iter=50,
+        early_stopping=True,
+        n_iter_no_change=5,
+        random_state=RANDOM_STATE,
+    )
+
+
 def get_multiclass_models():
     return {
         "logistic_regression": LogisticRegression(
@@ -55,6 +68,18 @@ def get_multiclass_models():
             n_jobs=1,
         ),
     }
+
+
+def get_mlp_multiclass_model():
+    return MLPClassifier(
+        hidden_layer_sizes=(128, 64),
+        activation="relu",
+        learning_rate_init=0.001,
+        max_iter=50,
+        early_stopping=True,
+        n_iter_no_change=5,
+        random_state=RANDOM_STATE,
+    )
 
 
 def fit_model(preprocessor, estimator, x_train, y_train):

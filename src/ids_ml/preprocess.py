@@ -16,7 +16,7 @@ def split_multiclass_features_target(frame):
     return x, y
 
 
-def build_preprocessor(feature_frame):
+def build_preprocessor(feature_frame, dense_output=False):
     inferred_categorical_columns = feature_frame.select_dtypes(
         include=["object", "category"]
     ).columns.tolist()
@@ -30,6 +30,12 @@ def build_preprocessor(feature_frame):
     return ColumnTransformer(
         transformers=[
             ("num", StandardScaler(), numeric_columns),
-            ("cat", OneHotEncoder(handle_unknown="ignore"), categorical_columns),
+            (
+                "cat",
+                OneHotEncoder(handle_unknown="ignore", sparse_output=not dense_output),
+                categorical_columns,
+            ),
         ]
+        ,
+        sparse_threshold=0.0 if dense_output else 0.3,
     )

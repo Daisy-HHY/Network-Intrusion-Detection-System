@@ -1,11 +1,13 @@
+import argparse
+
 import pandas as pd
 
-from .config import FIGURES_DIR, MODELS_DIR
+from config import FIGURES_DIR, MODELS_DIR
 from .data import load_unsw_nb15
-from .evaluate import build_confusion_matrix, compute_binary_metrics
-from .plotting import plot_confusion, plot_feature_importance, plot_metric_comparison
-from .preprocess import build_preprocessor, split_binary_features_target
-from .train import fit_model, get_binary_models, save_model
+from evaluate import build_confusion_matrix, compute_binary_metrics
+from plotting import plot_confusion, plot_feature_importance, plot_metric_comparison
+from preprocess import build_preprocessor, split_binary_features_target
+from train import fit_model, get_binary_models, get_mlp_binary_model, save_model
 
 
 def extract_feature_importance(pipeline, feature_names):
@@ -18,14 +20,30 @@ def extract_feature_importance(pipeline, feature_names):
     return frame.sort_values("importance", ascending=False).head(15)
 
 
+def parse_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--include-mlp", action="store_true")
+    return parser.parse_args()
+
+
 def main():
+    args = parse_args()
     train_df, test_df = load_unsw_nb15()
     x_train, y_train = split_binary_features_target(train_df)
     x_test, y_test = split_binary_features_target(test_df)
 
+    models = get_binary_models()
+    if args.include_mlp:
+        models["mlp"] = get_mlp_binary_model()
+
     rows = []
-    for model_name, estimator in get_binary_models().items():
-        pipeline = fit_model(build_preprocessor(x_train), estimator, x_train, y_train)
+    for model_name, estimator in models.items():
+        pipeline = fit_model(
+            build_preprocessor(x_train, dense_output=model_name == "mlp"),
+            estimator,
+            x_train,
+            y_train,
+        )
         y_pred = pipeline.predict(x_test)
         y_score = pipeline.predict_proba(x_test)[:, 1]
         metrics = compute_binary_metrics(y_test, y_pred, y_score)

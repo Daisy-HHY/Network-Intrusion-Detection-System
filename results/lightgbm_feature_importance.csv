@@ -1,0 +1,16 @@
+feature,importance
+num__smean,898
+num__sbytes,749
+num__ct_srv_src,705
+num__ct_srv_dst,456
+num__ct_dst_src_ltm,424
+num__dbytes,339
+num__sload,265
+num__dmean,261
+num__sinpkt,247
+num__tcprtt,244
+num__ct_src_ltm,234
+num__synack,231
+num__dload,221
+num__stcpb,214
+num__ct_dst_ltm,206
