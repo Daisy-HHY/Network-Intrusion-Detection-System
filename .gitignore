@@ -14,9 +14,9 @@ models/*
 results/figures/*
 !results/figures/.gitkeep
 
-doc/*
+doc/
 docs/*
 !docs/.gitkeep
-网络入侵检测系统_修订版.docx
-23计实2班16洪海艳《基于 UNSW-NB15 数据集的网络入侵检测模型研究》.docx
+*.docx
+*.doc
 
