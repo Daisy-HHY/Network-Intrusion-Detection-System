@@ -3,7 +3,7 @@ import argparse
 import pandas as pd
 
 from config import FIGURES_DIR, MODELS_DIR
-from .data import load_unsw_nb15
+from data import load_unsw_nb15
 from evaluate import build_confusion_matrix, compute_binary_metrics
 from plotting import plot_confusion, plot_feature_importance, plot_metric_comparison
 from preprocess import build_preprocessor, split_binary_features_target
